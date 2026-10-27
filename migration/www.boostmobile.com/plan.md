@@ -69,3 +69,29 @@ Each batch: create the DA page via the admin API → preview → browser check (
 - **Visual parity** is approximate (brand tokens + blocks), not pixel-perfect.
 - **Token:** the DA token expires after about 24 hours; renew it via `MIGRATION.md` §6.
 - **Performance:** no third-party scripts from the source; target Lighthouse 100 on PDP/PLP.
+
+## 7. Detailed task plan (Phase 3, Option A)
+
+Status values match `MIGRATION.md` §5. Each task finishes with a browser check (desktop 1280px and mobile 375px), `npm run lint`, record updates, and a commit. The "Depends on" column lists the tasks that must finish first.
+
+| ID | Task | Files / destinations | Acceptance criteria | Depends on |
+| --- | --- | --- | --- | --- |
+| T1 | Component inventory | `components.csv` | One render-inspected page per template; every source component mapped to a block, default content, link-out, or `unresolved` with a reason | — |
+| T2 | Brand tokens | `styles/styles.css`, `styles/fonts.css`, `fonts/` | Source colors, type scale, and button styles captured as CSS custom properties; fonts are self-hosted only if the license allows (otherwise a documented fallback stack); no CLS from fonts | T1 |
+| T3 | Global nav content | DA `/nav` | Top-level menu items and second-level links from the source mega menu; carrier flows and the locator point to absolute live URLs; utility links (cart, sign in) intact | T1 |
+| T4 | Header restyle | `blocks/header/header.css` (+ JS only if multi-level panels need it) | Mega menu works with mouse, keyboard, and on mobile (hamburger); mini-cart and auth drop-ins still function | T2, T3 |
+| T5 | Footer | DA `/footer`, `blocks/footer/footer.css` | Link columns, social links, legal text; matches the source layout at both breakpoints | T2 |
+| T6 | Shared fragments | DA `/fragments/*` | Experience fragments and legal modals reused by more than one page exist once and are referenced via `fragment`/`modal` | T1 |
+| T7 | `plan-cards` block | `blocks/plan-cards/{js,css,README.md}` | Author table: name, price, price note, features list, CTA link; defensive against missing cells; native DOM only; README documents the table | T2 |
+| T8 | Block variants | `blocks/{hero,cards,carousel}/*.css` | Hero variants and shelf/grid card styles match the source sections used on the homepage | T2 |
+| T9 | Homepage (en) | DA `/index` | All homepage sections present in source order; images load; CTAs resolve (internal → migrated pages, carrier flows → live URLs); `urls.csv` row `previewed` | T4, T5, T6, T7, T8 |
+| T10 | Content template pilots | DA: one each for plan, deals, brand, add-on, marketing, info, blog-landing, blog-article | Each pilot verified; any new gap is added to `components.csv` and fixed before bulk work | T9 |
+| T11 | Bulk content pages (en) | DA, about 115 pages | Created via a repeatable converter script (`tools/migrate/` excluded via `.hlxignore` if it is local-only); each page previewed (200); failures logged as `blocked` with a reason | T10 |
+| T12 | Help articles | DA `/help/*` (155) + `/help` index | Converted from the ReadMe.io markup; internal help links rewritten to `/help/<slug>` | T10 |
+| T13 | Commerce: PLPs | DA `/shop/...` category pages (16) | `product-list-page` renders sandbox products for categories that exist in ACCS; categories with no match are recorded as `blocked: catalog` | T4 |
+| T14 | Commerce: PDP routing | DA `/products/default`, `redirects` sheet; folder mapping | `/products/<urlKey>/<sku>` renders for a sandbox SKU (for example `iphone-16e/002481`); legacy `/shop/<name>.html` redirects for matched SKUs; folder mapping applied (needs admin access; otherwise flagged) | T4 |
+| T15 | Commerce: cart/auth/account redirects | DA `redirects` | `/shop/checkout/cart`, `/shop/customer/account/*` → starter `/cart`, `/customer/*` | T14 |
+| T16 | Spanish locale | DA `/es/nav`, `/es/footer`, `/es/placeholders`, `/es/**` (118) | The same pipeline as T9–T11 using es.boostmobile.com content; internal links stay under `/es`; Commerce `/es` root works (or is documented as a limitation) | T11 |
+| T17 | QA and report | `report.md`, `urls.csv`, `components.csv` | Lighthouse on home/PLP/PDP recorded; accessibility spot check; final totals; remaining blockers listed | T12–T16 |
+
+User checkpoints: after T9 (homepage look and feel), after T10 (template pilots), and before T11/T12/T16 bulk creation.
