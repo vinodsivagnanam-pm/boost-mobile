@@ -227,10 +227,33 @@ async function loadEager(doc) {
 }
 
 /**
+ * Opens links to `/modals/...` pages in a dialog instead of navigating.
+ * @param {Element} doc The document
+ */
+function autolinkModals(doc) {
+  doc.addEventListener('click', async (e) => {
+    const link = e.target.closest('a[href]');
+    if (!link) return;
+    const url = new URL(link.href, window.location.href);
+    if (url.origin !== window.location.origin || !url.pathname.startsWith('/modals/')) return;
+    e.preventDefault();
+    const [{ loadFragment }, { default: createModal }] = await Promise.all([
+      import('../blocks/fragment/fragment.js'),
+      import('../blocks/modal/modal.js'),
+    ]);
+    const fragment = await loadFragment(url.pathname);
+    if (!fragment) return;
+    const { showModal } = await createModal([...fragment.childNodes]);
+    showModal();
+  });
+}
+
+/**
  * Loads everything that doesn't need to be delayed.
  * @param {Element} doc The container element
  */
 async function loadLazy(doc) {
+  autolinkModals(doc);
   loadHeader(doc.querySelector('body > header'));
 
   const main = doc.querySelector('main');

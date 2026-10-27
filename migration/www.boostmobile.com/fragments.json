@@ -1,0 +1,129 @@
+[
+  {
+    "path": "/modals/plans/unlimited-deals",
+    "source_modal_ids": [
+      "modal130170006"
+    ],
+    "source_pages": [
+      "home.html",
+      "s_plans.html",
+      "s_plans_byod.html",
+      "s_shop_catalog_category_view_id_262.html"
+    ],
+    "status": [
+      "200",
+      "200"
+    ]
+  },
+  {
+    "path": "/modals/plans/unlimited-plus-deals",
+    "source_modal_ids": [
+      "modal1863522373"
+    ],
+    "source_pages": [
+      "home.html",
+      "s_plans.html",
+      "s_plans_byod.html",
+      "s_shop_catalog_category_view_id_262.html"
+    ],
+    "status": [
+      "200",
+      "200"
+    ]
+  },
+  {
+    "path": "/modals/plans/unlimited-premium-deals",
+    "source_modal_ids": [
+      "modal593333920"
+    ],
+    "source_pages": [
+      "home.html",
+      "s_plans.html",
+      "s_plans_byod.html",
+      "s_shop_catalog_category_view_id_262.html"
+    ],
+    "status": [
+      "200",
+      "200"
+    ]
+  },
+  {
+    "path": "/modals/plans/global-connection-details",
+    "source_modal_ids": [
+      "modal1169843949"
+    ],
+    "source_pages": [
+      "home.html",
+      "s_plans.html",
+      "s_shop_catalog_category_view_id_262.html"
+    ],
+    "status": [
+      "200",
+      "200"
+    ]
+  },
+  {
+    "path": "/modals/plans/unlimited-details",
+    "source_modal_ids": [
+      "modal-2081846155"
+    ],
+    "source_pages": [
+      "home.html",
+      "s_plans.html",
+      "s_shop_catalog_category_view_id_262.html"
+    ],
+    "status": [
+      "200",
+      "200"
+    ]
+  },
+  {
+    "path": "/modals/plans/unlimited-premium-details",
+    "source_modal_ids": [
+      "modal-1220300825",
+      "modal-1743121666",
+      "modal585782222"
+    ],
+    "source_pages": [
+      "home.html",
+      "s_deals.html",
+      "s_plans.html",
+      "s_shop_catalog_category_view_id_262.html"
+    ],
+    "status": [
+      "200",
+      "200"
+    ]
+  },
+  {
+    "path": "/modals/plans/unlimited-plus-details",
+    "source_modal_ids": [
+      "modal-685832189",
+      "modal182411645"
+    ],
+    "source_pages": [
+      "home.html",
+      "s_deals.html",
+      "s_plans.html",
+      "s_shop_catalog_category_view_id_262.html"
+    ],
+    "status": [
+      "200",
+      "200"
+    ]
+  },
+  {
+    "path": "/modals/legal/additional-disclaimers",
+    "source_modal_ids": [
+      "modal17007693"
+    ],
+    "source_pages": [
+      "home.html",
+      "s_shop_catalog_category_view_id_262.html"
+    ],
+    "status": [
+      "200",
+      "200"
+    ]
+  }
+]
