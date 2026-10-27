@@ -197,6 +197,18 @@ curl -sS "<graphql-endpoint>" -H 'Content-Type: application/json' -H 'Store: <st
 
 Use the [config generator](https://da.live/app/adobe-commerce/storefront-tools/tools/config-generator/config-generator) and the [storefront configuration reference](https://experienceleague.adobe.com/en/tools/commerce-storefront/setup/configuration/commerce-configuration/) for the exact structure. A repository `config.json` overrides the Config Service `public` configuration. For production, Adobe recommends storing the configuration in the Config Service instead of committing it. Config changes can take up to 2 hours to clear the CDN cache; also clear the `config` entry in the browser's session storage. Never put secrets in `config.json`; it is publicly served.
 
+### Authorize DA.live writes (agent-created pages)
+
+Agents create and update pages through the DA admin API (`https://admin.da.live/source/<org>/<site>/<path>.html`), which requires the user's own IMS bearer token. Each user supplies a token; never reuse another user's token.
+
+1. Sign in at `https://da.live/#/<org>/<site>` and confirm that the folder list loads.
+2. Open DevTools (Cmd+Option+I or Ctrl+Shift+I), select **Network**, filter by `admin.da.live`, and reload the page.
+3. Select a `list` request and, under **Request Headers**, copy only the value after `Authorization: Bearer `.
+4. Save it outside the repository: `pbpaste > ~/.da-token && chmod 600 ~/.da-token`. On other platforms, write the clipboard to the same file. The file should contain more than 1,000 characters.
+5. Verify the token: `curl -s -o /dev/null -w "%{http_code}" -H "Authorization: Bearer $(cat ~/.da-token)" https://admin.da.live/list/<org>/<site>` should return `200`.
+
+Tokens expire after about 24 hours; repeat these steps when the API returns `401`. Never commit the token, paste it into tracked files, or print it in logs. For CI, use an Adobe Developer Console server-to-server credential instead.
+
 ## 7. Troubleshooting and maintenance
 
 | Symptom | Action |
