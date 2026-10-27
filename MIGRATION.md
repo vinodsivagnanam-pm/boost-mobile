@@ -139,6 +139,7 @@ python3 tools/migrate/migrate.py --template <template> [--locale en-US] [--statu
 - Destination paths are normalized to EDS-safe segments (lowercase `[a-z0-9-]`); underscores or uppercase cause preview 404s. The normalized path is written back to `urls.csv` and noted in `reason`, so add a redirect from the source path later.
 - Card shelves whose cards all start with a quotation mark become `cards (testimonials)`. The `columns` and `cards` decorators keep source images whose `width` attribute is 200px or less (icons, badges) at that width instead of stretching them across the column.
 - Pilot one URL per template, verify it in the browser, fix the converter or hints, then run by template. Failures are written to `urls.csv` with a reason, and the batch continues.
+- Commerce listing pages are not converted from source HTML. Find the destination category paths with a Catalog Service `productSearch(phrase:"") { facets { ... on CategoryView { path count } } }` query, map each source PLP in `migration/<host>/plp.json` (`pages`: `source`, `destination`, `heading`, `urlpath` or `null` when there is no matching category; `records`: redirect-only or query-variant URLs with a status and reason), and then run `python3 tools/migrate/plp.py`. It writes the `product-list-page` block with `urlpath`, keeps the source title and description, and records the Product Discovery drop-in in `components.csv`. Verify Commerce images on the https `aem.page` preview; protocol-relative catalog image URLs can fail on `http://localhost`.
 
 ### Validate and hand off
 

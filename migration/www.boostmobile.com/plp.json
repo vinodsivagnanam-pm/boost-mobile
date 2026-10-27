@@ -1,0 +1,24 @@
+{
+  "_comment": "Commerce listing pages for tools/migrate/plp.py. urlpath is the ACCS category path (Catalog Service categories facet); null records the row as blocked: catalog. status/reason entries record source URLs that need no page (redirects, query variants).",
+  "dropin": "@dropins/storefront-product-discovery",
+  "block": "product-list-page",
+  "pages": [
+    {"source": "https://www.boostmobile.com/shop/devices/handsets", "destination": "/shop/devices/handsets", "heading": "Phones", "urlpath": "phones"},
+    {"source": "https://www.boostmobile.com/shop/devices/handsets/l/manufacturer:apple", "destination": "/shop/devices/handsets/apple", "heading": "Apple Phones", "urlpath": "phones/apple-iphones"},
+    {"source": "https://www.boostmobile.com/shop/devices/handsets/l/manufacturer:google", "destination": "/shop/devices/handsets/google", "heading": "Google Phones", "urlpath": "phones/google-phones"},
+    {"source": "https://www.boostmobile.com/shop/devices/handsets/l/manufacturer:samsung", "destination": "/shop/devices/handsets/samsung", "heading": "Samsung Phones", "urlpath": "phones/samsung-phones"},
+    {"source": "https://www.boostmobile.com/shop/devices/handsets/l/manufacturer:motorola", "destination": "/shop/devices/handsets/motorola", "heading": "Motorola Phones", "urlpath": null},
+    {"source": "https://www.boostmobile.com/shop/devices/tablets", "destination": "/shop/devices/tablets", "heading": "Tablets", "urlpath": null},
+    {"source": "https://www.boostmobile.com/shop/devices/watches", "destination": "/shop/devices/watches", "heading": "Smartwatches", "urlpath": null}
+  ],
+  "records": [
+    {"source": "https://www.boostmobile.com/shop/devices", "status": "excluded", "destination": "/", "reason": "Source redirects to the homepage; redirect only (T15)"},
+    {"source": "https://www.boostmobile.com/shop/catalog/category/view/id/265", "status": "excluded", "destination": "/", "reason": "Source redirects to the homepage; redirect only (T15)"},
+    {"source": "https://www.boostmobile.com/shop/catalog/category/view/id/266", "status": "excluded", "destination": "/", "reason": "Source redirects to the homepage; redirect only (T15)"},
+    {"source": "https://www.boostmobile.com/shop/devices/handsets?manufacturer=166", "status": "excluded", "destination": "/shop/devices/handsets", "reason": "Query variant; canonical is /shop/devices/handsets (EDS pages cannot vary by query)"},
+    {"source": "https://www.boostmobile.com/shop/devices/handsets?pid=001939", "status": "excluded", "destination": "/shop/devices/handsets", "reason": "Query variant; canonical is /shop/devices/handsets (EDS pages cannot vary by query)"},
+    {"source": "https://www.boostmobile.com/shop/devices/handsets?pid=002413", "status": "excluded", "destination": "/shop/devices/handsets", "reason": "Query variant; canonical is /shop/devices/handsets (EDS pages cannot vary by query)"},
+    {"source": "https://www.boostmobile.com/shop/devices/handsets?pid=002414", "status": "excluded", "destination": "/shop/devices/handsets", "reason": "Query variant; canonical is /shop/devices/handsets (EDS pages cannot vary by query)"},
+    {"source": "https://www.boostmobile.com/shop/devices/handsets?pid=002841", "status": "excluded", "destination": "/shop/devices/handsets", "reason": "Query variant; canonical is /shop/devices/handsets (EDS pages cannot vary by query)"}
+  ]
+}
