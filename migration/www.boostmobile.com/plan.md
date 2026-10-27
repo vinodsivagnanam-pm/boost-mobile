@@ -16,7 +16,9 @@ Evidence: the frequency of `cmp-*` classes in one sampled page per template. `co
 | `cmp-accordion` (FAQ) | plans, brand, add-ons, coverage, support | `accordion` | content | No |
 | `cmp-modal`, `cmp-md-overlay` (legal/offer details) | all | `modal` (link to a `/fragments/...` page) | content | No |
 | `cmp-experiencefragment` (shared promo/legal) | home, plans, deals, blog, add-ons | `fragment` → `/fragments/<name>` | content | No |
-| `cmp-embed` (video/script) | most | `embed` (not in starter) or link | content | **Yes, if video is required** |
+| `cmp-embed` (script wrapper; no video found in samples) | most | Usually dropped (wrapper for promo text) | content | No |
+| Plan-check lead form (`leadgenform-v2`) | home, plans | Link-out | custom | No |
+| PDP trade-in, line choice, Boost Protect, Affirm | shop PDP | Link-out / unresolved | custom | Recorded in `components.csv` |
 | `cmp-breadcrumb` | blog articles | Auto-block from metadata `breadcrumbs` | content | Small `scripts.js` change |
 | Mega menu (`cmp-mega`) | global | `header` (nav authored in `/nav`) | content + Commerce (mini-cart, auth) | Restyle + multi-level nav |
 | Footer | global | `footer` (`/footer`) | content | Restyle |
@@ -33,8 +35,8 @@ Evidence: the frequency of `cmp-*` classes in one sampled page per template. `co
 | help-article / help-page | 155 | content | `/help/<slug>`; default content |
 | shop-plp | 16 | commerce (drop-in) | One template per category page using the `product-list-page` block (Product Discovery drop-in), pointed at the matching ACCS category |
 | shop-pdp | 26 | commerce (drop-in) | Single `/products/default` (`product-details` block, PDP drop-in); folder mapping `/products/` → `/products/default`; `redirects` sheet `/shop/<name>.html` → `/products/<urlKey>/<sku>` |
-| shop-cart / shop-auth | 2 | commerce (drop-in) | Existing `/cart`, `/customer/login` (Cart, User Auth drop-ins) + redirects |
-| shop-account | 5 | commerce (drop-in) | Existing `/customer/*` account pages (Account drop-in) + redirects; carrier billing stays at the live site |
+| shop-cart | 1 | commerce (drop-in) | Existing `/cart` (Cart drop-in) + redirect |
+| shop-auth / shop-account | 6 | custom → link-out | Source redirects to carrier PingFederate SSO (`id.boostmobile.com`); link out. Starter `/customer/*` drop-in pages remain for Commerce-only accounts (T1 finding) |
 | activation, compatibility, coverage, BYOD/multiline, account-gateway | 12 | custom → link-out | Not migrated; nav/CTA links point to the live Boost URLs (decision) |
 | store-locator | 2 (+82,456) | excluded | Link out |
 
@@ -90,7 +92,7 @@ Status values match `MIGRATION.md` §5. Each task finishes with a browser check 
 | T12 | Help articles | DA `/help/*` (155) + `/help` index | Converted from the ReadMe.io markup; internal help links rewritten to `/help/<slug>` | T10 |
 | T13 | Commerce: PLPs | DA `/shop/...` category pages (16) | `product-list-page` renders sandbox products for categories that exist in ACCS; categories with no match are recorded as `blocked: catalog` | T4 |
 | T14 | Commerce: PDP routing | DA `/products/default`, `redirects` sheet; folder mapping | `/products/<urlKey>/<sku>` renders for a sandbox SKU (for example `iphone-16e/002481`); legacy `/shop/<name>.html` redirects for matched SKUs; folder mapping applied (needs admin access; otherwise flagged) | T4 |
-| T15 | Commerce: cart/auth/account redirects | DA `redirects` | `/shop/checkout/cart`, `/shop/customer/account/*` → starter `/cart`, `/customer/*` | T14 |
+| T15 | Commerce: cart redirect + SSO link-outs | DA `redirects`, `/nav` | `/shop/checkout/cart` → `/cart`; sign-in/account links point to the live carrier SSO (T1 finding) | T14 |
 | T16 | Spanish locale | DA `/es/nav`, `/es/footer`, `/es/placeholders`, `/es/**` (118) | The same pipeline as T9–T11 using es.boostmobile.com content; internal links stay under `/es`; Commerce `/es` root works (or is documented as a limitation) | T11 |
 | T17 | QA and report | `report.md`, `urls.csv`, `components.csv` | Lighthouse on home/PLP/PDP recorded; accessibility spot check; final totals; remaining blockers listed | T12–T16 |
 
