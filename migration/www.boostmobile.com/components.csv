@@ -96,7 +96,7 @@ https://www.boostmobile.com/errors/account,account-gateway-s02,main,content,imag
 https://www.boostmobile.com/errors/account,account-gateway-s03,main,content,text/heading/buttons; comps=text; h=We hit an unexpected error.,default content,,,pending,
 https://www.boostmobile.com/errors/account,account-gateway-s04,main,content,text/heading/buttons; comps=text; h=,default content,,,pending,
 https://www.boostmobile.com/errors/account,account-gateway-s05,main,content,CTA button; comps=button; h=,default content (button),,,pending,
-https://www.boostmobile.com/shop/iphone-16.html,shop-pdp-core,main,drop-in,"Magento configurable product: gallery, title, color/storage swatches, price-box, box-tocart",product-details,@dropins/storefront-pdp,blocks/product-details; DA /products/default,pending,
+https://www.boostmobile.com/shop/iphone-16.html,shop-pdp-core,main,drop-in,"Magento configurable product: gallery, title, color/storage swatches, price-box, box-tocart",product-details,@dropins/storefront-pdp,DA /products/default + folder mapping /products/ -> /products/default,verified,23 of 26 source PDPs have no SKU in the configured catalog (urls.csv blocked)
 https://www.boostmobile.com/shop/iphone-16.html,shop-pdp-tradein,main,custom,#tradeInBlock trade-in required flow,link-out,,,pending,Carrier trade-in service; no drop-in equivalent
 https://www.boostmobile.com/shop/iphone-16.html,shop-pdp-line-choice,main,custom,"#portIn / #new number choice, multiline_express_activation",link-out,,,pending,Carrier activation logic
 https://www.boostmobile.com/shop/iphone-16.html,shop-pdp-protect,main,custom,Boost Protect (AppleCare) upsell modal #add-boost-protect-button,unresolved,,,pending,Could be a related product/bundle in Commerce; needs catalog modeling

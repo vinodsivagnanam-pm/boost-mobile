@@ -1,0 +1,64 @@
+{
+ "total": 14,
+ "limit": 14,
+ "offset": 0,
+ "data": [
+  {
+   "source": "/.well-known/apple-developer-merchantid-domain-association",
+   "destination": "/.well-known/apple-developer-merchantid-domain-association.bin"
+  },
+  {
+   "source": "/boost-blog/news/best-budget-5G-phones-of-2026",
+   "destination": "/boost-blog/news/best-budget-5g-phones-of-2026"
+  },
+  {
+   "source": "/contract_buyout/terms_and_conditions",
+   "destination": "/contract-buyout/terms-and-conditions"
+  },
+  {
+   "source": "/shop/catalog/category/view/id/262",
+   "destination": "/"
+  },
+  {
+   "source": "/shop/catalog/category/view/id/265",
+   "destination": "/"
+  },
+  {
+   "source": "/shop/catalog/category/view/id/266",
+   "destination": "/"
+  },
+  {
+   "source": "/shop/devices",
+   "destination": "/"
+  },
+  {
+   "source": "/shop/devices/handsets/l/manufacturer:apple",
+   "destination": "/shop/devices/handsets/apple"
+  },
+  {
+   "source": "/shop/devices/handsets/l/manufacturer:google",
+   "destination": "/shop/devices/handsets/google"
+  },
+  {
+   "source": "/shop/devices/handsets/l/manufacturer:samsung",
+   "destination": "/shop/devices/handsets/samsung"
+  },
+  {
+   "source": "/shop/galaxy-a16-5g-002198.html",
+   "destination": "/products/samsung-galaxy-a16-5g/002198"
+  },
+  {
+   "source": "/shop/galaxy-a16-5g.html",
+   "destination": "/products/samsung-galaxy-a16-5g/002198"
+  },
+  {
+   "source": "/shop/iphone-16e.html",
+   "destination": "/products/iphone-16e/002481"
+  },
+  {
+   "source": "/shop/pixel-10a-002729.html",
+   "destination": "/products/google-pixel-10a/002729"
+  }
+ ],
+ ":type": "sheet"
+}
