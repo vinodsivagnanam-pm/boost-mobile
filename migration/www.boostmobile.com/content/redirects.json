@@ -1,6 +1,6 @@
 {
- "total": 14,
- "limit": 14,
+ "total": 15,
+ "limit": 15,
  "offset": 0,
  "data": [
   {
@@ -26,6 +26,10 @@
   {
    "source": "/shop/catalog/category/view/id/266",
    "destination": "/"
+  },
+  {
+   "source": "/shop/checkout/cart",
+   "destination": "/cart"
   },
   {
    "source": "/shop/devices",
