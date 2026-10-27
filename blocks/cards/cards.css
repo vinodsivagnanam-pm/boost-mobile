@@ -138,7 +138,7 @@
 }
 
 .cards.offers .cards-card-body em {
-  color: var(--color-accent-500, #fc5400);
+  color: var(--color-accent-text, #c94300);
   font-style: normal;
   font-weight: 700;
 }

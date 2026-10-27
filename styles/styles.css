@@ -21,6 +21,9 @@
   --color-brand-700: #525261;
   --color-accent-500: #fc5400;
   --color-accent-300: #f7901e;
+
+  /* Accent for small text on light backgrounds (4.9:1 on white; #fc5400 is 3.3:1) */
+  --color-accent-text: #c94300;
   --color-link: #0072ec;
   --color-focus: #0072ec;
   --color-neutral-50: #fff;

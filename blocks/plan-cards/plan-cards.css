@@ -31,7 +31,7 @@
   font-style: italic;
   text-transform: uppercase;
   font-size: var(--heading-font-size-m, 1.75rem);
-  color: var(--color-accent-500, #fc5400);
+  color: var(--color-accent-text, #c94300);
 }
 
 .plan-cards .plan-cards-price {

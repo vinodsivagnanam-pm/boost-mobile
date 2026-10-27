@@ -1,6 +1,6 @@
 # Migration report: www.boostmobile.com
 
-Source accessed: 2026-10-27. Starter commit: `ea3f33a`. Status: **discovery complete; scope decided; no pages implemented**.
+Source accessed: 2026-10-27. Starter commit: `ea3f33a`. Status: **migrated to DA.live preview (T1–T17 complete); not published**. Preview: https://main--boost-mobile--vinodsivagnanam-pm.aem.page/
 
 ## Scope and discovery
 
@@ -42,6 +42,8 @@ Deduplication: fragments removed, trailing slashes removed, tracking parameters 
 | help-article / help-page | 155 | content | Default content, article template |
 | Spanish mirror (`/es`) | 118 | per English template | Same blocks, localized content and placeholders |
 
+Final template classification is in `urls.csv` (`page_classification`) and per-component evidence in `components.csv`; the table above is the discovery-time estimate. Changes after implementation: `account-gateway` became hybrid (content with SSO link-outs), shop-account and shop-auth became excluded link-outs to the carrier SSO, and Spanish pages reuse the English blocks.
+
 ## Commerce backend
 
 ACCS sandbox `config.json` committed. The sandbox catalog has 18 products: partial overlap with the source (Galaxy A16 5G, iPhone 16e, Pixel 10a, BYOD plans, Boost Protect). Source PDPs for products missing from the sandbox cannot render live data until the catalog is loaded.
@@ -52,10 +54,37 @@ Recorded in `site.json` `decisions`: locator excluded and linked; Spanish and he
 
 ## Totals
 
-See `urls.csv`: 454 URL rows (448 pending, 6 excluded; 336 en-US, 118 es-US). Component inventory (`components.csv`) not started.
+`urls.csv`: 455 rows (337 en-US, 118 es-US).
 
-## Next pending batch
+| Status | Rows | Notes |
+| --- | --- | --- |
+| verified | 27 | Browser-checked on preview (home, template pilots, PLPs, PDPs, cart, `/help` samples, `/es`, `/es/plans`, an ES blog article) |
+| implemented | 367 | Uploaded and previewed; route sweeps returned HTTP 200 with one h1 (except 6 pages without a source h1) |
+| excluded | 33 | Carrier flows and SSO link-outs, redirect-only and query-variant URLs, robots-disallowed, empty source |
+| blocked | 28 | 26 Commerce rows lack catalog data (23 PDPs, Motorola/tablet/watch PLPs); `yourprivacychoices` (EN and ES) is a client-side privacy form |
 
-1. Obtain DA.live write authorization (token kept outside the repository).
-2. Render-inspect one page per template and write `components.csv`.
-3. Implement the global header/footer and homepage first.
+By page classification: content 343, hybrid 46, commerce 43, custom 23.
+
+`components.csv`: 507 rows. Content 487, drop-in 9, custom 8, hybrid 2, unresolved 1 (excluded). Drop-ins used: `storefront-pdp`, `storefront-cart`, `storefront-product-discovery` (PLPs), plus `storefront-auth` and the mini cart in the header (hybrid).
+
+## Quality (Lighthouse 12, mobile, aem.page preview, after T16)
+
+| Page | Perf | A11y | Best practices | SEO | LCP | CLS | TBT |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| `/` | 98 | 94 | 100 | 69 | 2.0 s | 0.007 | 0 ms |
+| `/shop/devices/handsets` (PLP) | 90 | 94 | 93 | 69 | 3.4 s | 0 | 20 ms |
+| `/products/iphone-16e/002481` (PDP) | 88 | 96 | 96 | 61 | 3.5 s | 0 | 40 ms |
+| `/es` | 99 | 94 | 96 | 69 | 1.7 s | 0 | 0 ms |
+
+- SEO: `is-crawlable` fails on every page because `aem.page` preview sends `noindex`; this does not apply to the live domain. The PDP template has no meta description (the drop-in does not set one); add a product-level description at go-live.
+- Fixed in T17: brand orange `#fc5400` is 3.3:1 on white, so small orange text (plan-card names, offer-card emphasis) now uses `--color-accent-text: #c94300` (4.9:1); fills and large text keep `#fc5400`. A missing `/default-meta-image.png` (404 on pages without an image, such as the PDP) was added from the source share image.
+- Remaining: `heading-order` on the home hero carousel (h1 then h3, as authored on the source); PDP gallery dots are below the 24px target size (drop-in markup); PLP catalog images trigger `image-aspect-ratio`/`image-size-responsive` (catalog assets). Commerce LCP is 3.4–3.5 s on the sandbox; re-measure against the production catalog.
+
+## Remaining blockers and go-live work
+
+- **Catalog:** 23 source PDPs and the Motorola, tablet, and watch PLPs need products and categories in the Commerce catalog. Rerun `pdp.py` and `plp.py` after loading them.
+- **CDN redirects at cutover** (not expressible in the EDS redirects sheet): `/l/manufacturer:*`, `?pid=`/`?manufacturer=` variants, `help.boostmobile.com/docs/*` → `/help/*`, `es.boostmobile.com/*` → `/es/*`, and `/shop/customer/*` plus the carrier flows (activation, compatibility check, coverage map, BYOD multiline) to the carrier origin.
+- **Third-party and carrier features:** Affirm financing, trade-in, line choice, Boost Protect bundles, the plan-check lead form, newsletter signup, and the privacy-choices form. These stay link-outs or need separate integration work.
+- **Content gaps:** licensed brand fonts (fallback stack in use), Plan Details modals on deals cards, the ReadMe search widget, the troubleshooting iframe, and `/modals/plans/*` in Spanish.
+- **Localization:** Spanish pages use English Commerce labels and English Commerce pages (no Spanish store view). A multistore `/es/` root is the upgrade path when one exists.
+- **Publishing:** nothing is published to `aem.live`; publishing requires an authorized decision and the production Commerce configuration.
