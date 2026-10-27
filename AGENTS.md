@@ -1,6 +1,12 @@
 <!-- UNIVERSAL AGENT RULES FILE (AGENTS.md) -->
 # Boost Mobile project instructions
 
+## Portable migration entry point
+
+For a source-site migration, read `MIGRATION.md` and apply its workflow. That document is the handoff contract for other users and agents; do not rely on this conversation or a previous user's laptop state. A source URL is sufficient to start discovery and local migration. Publishing and live commerce require separately authorized configuration.
+
+Keep migration behavior generic: derive branding, locales, and page patterns from the supplied source, not this repository's Boost Mobile name. Store resumable, non-sensitive migration records under `migration/<source-host>/`, following the schemas in `MIGRATION.md`.
+
 ## Skill, server, and Wayfinder priority
 
 Check these rules in order and stop at the first match:

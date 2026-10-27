@@ -4,6 +4,7 @@
   "version": "11.0.0",
   "description": "Starter project for Adobe Commerce on Edge Delivery Services",
   "scripts": {
+    "setup": "npm ci --ignore-scripts && npm run install:dropins",
     "lint:js": "eslint .",
     "lint:css": "stylelint \"blocks/**/*.css\" \"styles/*.css\"",
     "lint": "npm run lint:js && npm run lint:css",

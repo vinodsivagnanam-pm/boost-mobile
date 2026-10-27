@@ -4,6 +4,12 @@ This project is the Edge Delivery Services storefront migration for Boost Mobile
 
 Once the source URL is available, inventory its sitemap and classify each page's implementation needs. The migration should distinguish authorable content blocks from Commerce blocks that host drop-ins, standalone drop-in experiences, and pages that combine these patterns.
 
+## Reuse this project on another laptop
+
+Start with the [portable migration handoff](MIGRATION.md). It includes laptop setup, a copy-and-paste Copilot prompt requiring only the source URL, tool configuration, resumable page tracking, and the separate prerequisites for publishing.
+
+The committed Commerce skills and MCP configuration travel with the repository. Run `npm run setup` after cloning; do not rerun the skills installer unless intentionally upgrading the starter.
+
 ## Documentation
 
 Before using the boilerplate, we recommend you to go through the documentation on <https://experienceleague.adobe.com/developer/commerce/storefront/> and more specifically:

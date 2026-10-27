@@ -1,0 +1,12 @@
+instructions: |
+  For source-site migrations, read AGENTS.md and MIGRATION.md.
+  Use the committed storefront skills and record resumable migration state.
+  Do not assume account credentials, authoring destinations, or Commerce services
+  from another user's laptop. A source URL starts discovery and local work;
+  publishing requires authorized destination configuration.
+scripts:
+  - name: Setup storefront
+    command: npm run setup
+    triggers:
+      - session.create
+auto_open_in_browser: true
