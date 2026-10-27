@@ -71,3 +71,53 @@ footer .footer p {
         padding: 40px 32px 24px;
     }
 }
+
+/* Brand footer: link columns, social row, copyright */
+footer .footer h3 {
+  font-family: var(--type-display-font-family);
+  font-size: 1.5rem;
+  font-style: italic;
+  line-height: 2.5rem;
+  margin: 1.6rem 0 0;
+  color: var(--color-brand-500);
+  text-transform: uppercase;
+}
+
+footer .footer .default-content-wrapper ul,
+footer .footer .columns ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+footer .footer li a {
+  display: inline-block;
+  padding: 0.2rem 0;
+  font-size: 1.4rem;
+  line-height: 2.4rem;
+  font-weight: 700;
+  color: var(--color-brand-700);
+  text-decoration: none;
+}
+
+footer .footer li a:hover {
+  color: var(--color-brand-500);
+  text-decoration: underline;
+}
+
+footer .footer .columns > div {
+  gap: 0 var(--spacing-big);
+}
+
+footer .footer .section:last-child ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-small) var(--spacing-medium);
+  margin-block: var(--spacing-xsmall) var(--spacing-medium);
+}
+
+footer .footer .section:last-child p:last-child {
+  text-align: center;
+  color: var(--color-brand-600);
+  padding-top: var(--spacing-medium);
+}
