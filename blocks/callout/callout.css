@@ -1,0 +1,40 @@
+.callout {
+  margin: 24px 0;
+  padding: 16px 20px;
+  border-left: 4px solid var(--color-accent-500);
+  border-radius: 8px;
+  background-color: var(--color-neutral-200);
+}
+
+.callout .callout-content > :first-child {
+  margin-top: 0;
+}
+
+.callout .callout-content > :last-child {
+  margin-bottom: 0;
+}
+
+.callout .callout-content :is(h2, h3, h4, h5, h6) {
+  font: var(--type-body-1-strong-font);
+}
+
+.callout.info {
+  border-left-color: var(--color-informational-800);
+  background-color: var(--color-informational-200);
+}
+
+.callout.success {
+  border-left-color: var(--color-positive-800);
+  background-color: var(--color-positive-200);
+}
+
+.callout.warn,
+.callout.warning {
+  border-left-color: var(--color-warning-800);
+  background-color: var(--color-warning-200);
+}
+
+.callout.error {
+  border-left-color: var(--color-alert-800);
+  background-color: var(--color-alert-200);
+}

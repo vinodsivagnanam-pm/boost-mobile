@@ -134,8 +134,8 @@ def strip_noise(root):
     return root
 
 
-def clean(el, base=LIVE_ORIGIN, h1=True):
-    """Return simplified, DA-safe HTML for el's children."""
+def clean(el, base=LIVE_ORIGIN, h1=True, arrows=False):
+    """Return simplified, DA-safe HTML for el's children. arrows=False drops decorative CTA arrows (\u2192)."""
     soup = BeautifulSoup(str(el), 'html.parser')
     root = soup.find()
     if root is None:
@@ -163,13 +163,16 @@ def clean(el, base=LIVE_ORIGIN, h1=True):
             if not src or src.startswith('data:'):
                 t.decompose()
                 continue
-            attrs['src'] = img_url(src)
+            w = str(t.get('width') or '').replace('px', '')
+            attrs['src'] = img_url(src, int(w) if w.isdigit() and int(w) < 600 else None)
+            if w.isdigit():
+                attrs['width'] = w
             attrs['alt'] = t.get('alt', '')
         if t.name in ('td', 'th') and t.get('colspan'):
             attrs['colspan'] = t['colspan']
         t.attrs = attrs
     for n in list(root.find_all(string=True)):
-        v = re.sub(r'\s+', ' ', n.replace('\u2192', ''))
+        v = re.sub(r'\s+', ' ', n if arrows else n.replace('\u2192', ''))
         if v != n:
             n.replace_with(v)
     for t in root.find_all(['p', 'li', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6']):
@@ -194,11 +197,11 @@ def clean(el, base=LIVE_ORIGIN, h1=True):
         if isinstance(n, NavigableString) or (isinstance(n, Tag) and n.name in INLINE):
             buf += str(n)
         else:
-            if buf.strip():
+            if re.sub(r'<br\s*/?>|\s', '', buf):
                 parts.append('<p>' + buf.strip() + '</p>')
             buf = ''
             parts.append(str(n))
-    if buf.strip():
+    if re.sub(r'<br\s*/?>|\s', '', buf):
         parts.append('<p>' + buf.strip() + '</p>')
     out = '\n'.join(p for p in parts if p.strip())
     out = re.sub(r'(\s+)</(a|strong|em)>', r'</\2>\1', out)

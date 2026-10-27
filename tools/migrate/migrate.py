@@ -6,8 +6,9 @@ migration records. Re-runnable: each run overwrites the DA page and the record.
   MIGRATION_HOST=www.example.com python3 tools/migrate/migrate.py --url https://www.example.com/about
   options: --dry-run (no upload, no record changes), --status pending (rows to pick), --skip-done
 
-Pages are converted by aem_core.convert (AEM core components). Sources built on
-other platforms need another converter module with the same convert() contract.
+Each page goes to the first converter in CONVERTERS whose detect(html) matches:
+readme (ReadMe.io knowledge bases), then aem_core (AEM Core Components, the default).
+Sources built on other platforms need another module with detect() and convert().
 """
 import argparse
 import csv
@@ -18,6 +19,9 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import lib as L  # noqa: E402
 import aem_core  # noqa: E402
+import readme  # noqa: E402
+
+CONVERTERS = [readme, aem_core]
 
 DONE = {'implemented', 'verified', 'published', 'excluded'}
 
@@ -48,7 +52,9 @@ def migrate_row(r, dry):
     if L.eds_path(dest) != dest.rstrip('/') and dest != '/':
         note = 'destination normalized from ' + dest
         dest = r['destination_path'] = L.eds_path(dest)
-    sections, summary, soup = aem_core.convert(L.fetch(src))
+    html = L.fetch(src)
+    conv = next((c for c in CONVERTERS if getattr(c, 'detect', lambda h: True)(html)), aem_core)
+    sections, summary, soup = conv.convert(html)
     if not sections:
         return 'failed', 'no convertible content found', summary
     sections[-1] += L.metadata(soup)
@@ -61,6 +67,8 @@ def migrate_row(r, dry):
     put, prev = L.upload(dest if dest != '/' else '/index', doc)
     if put not in ('200', '201') or prev != '200':
         return 'failed', 'DA put ' + put + ' preview ' + prev, summary
+    gaps = [n[5:] for _, names in summary for n in names if n.startswith('GAP: ')]
+    note = '; '.join(([note] if note else []) + ['unsupported embed: ' + g for g in gaps])
     return 'implemented', note, summary
 
 
@@ -97,9 +105,9 @@ def main():
             continue
         r['status'], r['reason'] = st, reason
         cid = (r['destination_path'].strip('/') or 'index').replace('/', '-') + '-page'
-        blocks = sorted({b for _, names in summary for b in names})
+        blocks = sorted({b for _, names in summary for b in names if not b.startswith('GAP: ')})
         crow = {'source_url': r['source_url'], 'component_id': cid, 'region': 'main',
-                'classification': 'content', 'evidence': 'tools/migrate aem_core: ' + str(len(summary)) + ' sections',
+                'classification': 'content', 'evidence': 'tools/migrate: ' + str(len(summary)) + ' sections',
                 'block': '; '.join(blocks), 'dropin_package': '',
                 'implementation_path': 'DA ' + r['destination_path'], 'status': st, 'blocker': reason}
         crows[:] = [c for c in crows if c['component_id'] != cid] + [crow]

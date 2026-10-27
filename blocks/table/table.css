@@ -1,0 +1,32 @@
+.table .table-scroll {
+  overflow-x: auto;
+}
+
+.table table {
+  width: 100%;
+  border-collapse: collapse;
+  font: var(--type-body-2-default-font);
+}
+
+.table th,
+.table td {
+  padding: 12px;
+  border: 1px solid var(--color-neutral-400);
+  text-align: left;
+  vertical-align: top;
+}
+
+.table th {
+  font: var(--type-body-2-strong-font);
+  background-color: var(--color-neutral-200);
+}
+
+.table td > :first-child,
+.table th > :first-child {
+  margin-top: 0;
+}
+
+.table td > :last-child,
+.table th > :last-child {
+  margin-bottom: 0;
+}
