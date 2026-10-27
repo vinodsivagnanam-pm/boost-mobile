@@ -1,0 +1,111 @@
+.plan-cards > ul {
+  display: flex;
+  gap: 16px;
+  margin: 0;
+  padding: 4px 4px 16px;
+  list-style: none;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+}
+
+.plan-cards .plan-cards-card {
+  display: flex;
+  flex: 0 0 85%;
+  flex-direction: column;
+  min-width: 0;
+  box-sizing: border-box;
+  gap: 16px;
+  padding: 24px;
+  border: 1px solid var(--color-neutral-400, #d6d6d6);
+  border-radius: 16px;
+  background: var(--background-color, #fff);
+  scroll-snap-align: start;
+}
+
+.plan-cards .plan-cards-header > * {
+  margin: 0;
+}
+
+.plan-cards .plan-cards-name {
+  font-family: var(--type-display-font-family, inherit);
+  font-style: italic;
+  text-transform: uppercase;
+  font-size: var(--heading-font-size-m, 1.75rem);
+  color: var(--color-accent-500, #fc5400);
+}
+
+.plan-cards .plan-cards-price {
+  font-size: 2.5rem;
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+.plan-cards .plan-cards-price del,
+.plan-cards .plan-cards-price s {
+  font-size: 1.25rem;
+  font-weight: 400;
+  color: var(--color-neutral-700, #666);
+}
+
+.plan-cards .plan-cards-actions p {
+  margin: 0;
+}
+
+.plan-cards .plan-cards-header p:not(.plan-cards-price) {
+  font-size: var(--body-font-size-xs, 0.875rem);
+}
+
+.plan-cards .plan-cards-features ul {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.plan-cards .plan-cards-features li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 600;
+}
+
+.plan-cards .plan-cards-feature-icon img {
+  width: 28px;
+  height: 28px;
+}
+
+.plan-cards .plan-cards-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: auto;
+}
+
+.plan-cards .plan-cards-actions .button {
+  display: block;
+  margin: 0;
+  text-align: center;
+  white-space: normal;
+}
+
+.plan-cards .plan-cards-details {
+  font-weight: 700;
+  text-decoration: underline;
+}
+
+@media (min-width: 600px) {
+  .plan-cards .plan-cards-card {
+    flex-basis: calc((100% - 16px) / 2);
+  }
+}
+
+@media (min-width: 900px) {
+  .plan-cards > ul {
+    overflow-x: visible;
+  }
+
+  .plan-cards .plan-cards-card {
+    flex: 1 1 0;
+  }
+}
