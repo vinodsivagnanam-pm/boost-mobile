@@ -3,7 +3,7 @@
   "source_url": "https://www.boostmobile.com/",
   "source_host": "www.boostmobile.com",
   "started_at": "2026-10-27T18:42:30Z",
-  "updated_at": "2026-10-27T18:46:00Z",
+  "updated_at": "2026-10-27",
   "starter_commit": "ea3f33a",
   "tool_versions": {
     "node": "v24.15.0",
@@ -20,16 +20,16 @@
     "https://www.boostmobile.com/en.sitemap.xml",
     "https://www.boostmobile.com/shop/media/sitemap/boostmobile/sitemap.xml",
     "https://www.boostmobile.com/locations/sitemap.xml",
-    "https://help.boostmobile.com/sitemap.xml (other origin, not in scope)",
-    "https://www.globalsiteseo.com/boostmobile.GSM/boostmobile.gsm.index.en_super.xml (third party, not fetched)",
-    "https://www.globalsiteseo.com/boostmobile.GSM/boostmobile.gsm.index.es_super.xml (third party, not fetched)"
+    "https://help.boostmobile.com/sitemap.xml",
+    "https://www.globalsiteseo.com/boostmobile.GSM/boostmobile.gsm.index.es_super.xml (Spanish, 1:1 mirror of en.sitemap.xml)"
   ],
-  "discovery_status": "in_progress",
+  "discovery_status": "complete",
   "discovery_limitations": [
-    "Navigation crawl covers homepage only so far; deeper link crawl pending",
-    "82456 /locations URLs recorded as one template group (full list in locations-urls.txt.gz)",
+    "Navigation crawl covers homepage only; pages outside sitemaps and homepage nav may be missed",
+    "82456 /locations URLs excluded by decision; full list kept in locations-urls.txt.gz",
     "Authenticated pages (account, checkout) not accessible",
-    "help.boostmobile.com and es.boostmobile.com are other origins and not crawled"
+    "Spanish site is a MotionPoint translation proxy; translated text is captured from rendered pages",
+    "Templates are provisional until one page per template is render-inspected"
   ],
   "destination": {
     "repository": "vinodsivagnanam-pm/boost-mobile",
@@ -37,5 +37,37 @@
     "preview_url": "https://main--boost-mobile--vinodsivagnanam-pm.aem.page/",
     "commerce_backend": "ACCS sandbox (config.json present)",
     "catalog_note": "Sandbox has 18 products; only partial overlap with source device catalog"
-  }
+  },
+  "decisions": [
+    {
+      "topic": "store-locator",
+      "decision": "Exclude /locations pages; link to the live locator",
+      "date": "2026-10-27"
+    },
+    {
+      "topic": "locales",
+      "decision": "Include es.boostmobile.com as /es/<path>",
+      "date": "2026-10-27"
+    },
+    {
+      "topic": "help",
+      "decision": "Include help.boostmobile.com as /help/<slug>",
+      "date": "2026-10-27"
+    },
+    {
+      "topic": "products",
+      "decision": "Single templated PDP at /products/<urlKey>/<sku> plus redirects from /shop/*.html; PLPs use a single template",
+      "date": "2026-10-27"
+    },
+    {
+      "topic": "carrier-flows",
+      "decision": "Activation, compatibility, coverage, BYOD/multiline, and carrier account link out to live Boost flows",
+      "date": "2026-10-27"
+    },
+    {
+      "topic": "content-destination",
+      "decision": "Create pages directly in DA.live once the user authorizes write access",
+      "date": "2026-10-27"
+    }
+  ]
 }

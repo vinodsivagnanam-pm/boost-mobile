@@ -1,6 +1,6 @@
 # Migration report: www.boostmobile.com
 
-Source accessed: 2026-10-27. Starter commit: `ea3f33a`. Status: **discovery in progress; no pages implemented**.
+Source accessed: 2026-10-27. Starter commit: `ea3f33a`. Status: **discovery complete; scope decided; no pages implemented**.
 
 ## Scope and discovery
 
@@ -9,9 +9,9 @@ Source accessed: 2026-10-27. Starter commit: `ea3f33a`. Status: **discovery in p
 | `en.sitemap.xml` (AEM marketing site) | 118 | In scope |
 | `shop/.../sitemap.xml` (Magento shop) | 32 (non-image) | In scope; commerce |
 | Homepage navigation, not in any sitemap | 32 | In scope after review (3 excluded as action URLs or robots-disallowed) |
-| `locations/sitemap.xml` (store locator) | 82,456 | One template group; scope decision pending |
-| `help.boostmobile.com` | 155 | Other origin; out of scope unless authorized |
-| `es.boostmobile.com` (Spanish) | not crawled | Other origin; out of scope unless authorized |
+| `locations/sitemap.xml` (store locator) | 82,456 | Excluded; link to live locator |
+| `help.boostmobile.com` (ReadMe.io) | 155 | In scope; migrate to `/help/<slug>` |
+| `es.boostmobile.com` (Spanish, MotionPoint proxy) | 118 | In scope; migrate to `/es/<path>` |
 
 Deduplication: fragments removed, trailing slashes removed, tracking parameters (`_gl`, `utm_*`, `gclid`) removed; other query strings kept. `robots.txt` disallows `/learn`, `/en2`, `/threat-test`, `/welcome`, `/primary`, `/myaccount`, `/promo`, and Magento system paths. `/promo/focusgroup` is listed in the sitemap but disallowed, so it is excluded.
 
@@ -32,24 +32,30 @@ Deduplication: fragments removed, trailing slashes removed, tracking parameters 
 | add-on-landing | 14 | content | Content blocks |
 | marketing-page / info-page | 33 | content | Default content + content blocks |
 | blog-landing / blog-article | 49 | content | Default content, article list, breadcrumbs |
-| shop-plp | 16 | commerce | `product-list-page` block (Product Discovery drop-in) |
-| shop-pdp | 26 | commerce | `product-details` block (PDP drop-in) |
+| shop-plp | 16 | commerce | Single PLP template, `product-list-page` block (Product Discovery drop-in) |
+| shop-pdp | 26 | commerce | Single `/products/default` template (PDP drop-in) + redirects from `/shop/*.html` |
 | shop-cart / shop-auth | 3 | commerce | Cart and User Auth drop-ins |
 | shop-account | 5 | unresolved | Carrier account vs Commerce account; needs decision |
-| activation / shop-custom-flow / compatibility / coverage-map | 10 | custom | Carrier services; no drop-in equivalent |
+| activation / shop-custom-flow / compatibility / coverage-map | 10 | custom | Link out to live Boost flows (decision) |
 | account-gateway | 2 | unresolved | Carrier billing login |
-| store-locator | 2 (+82,456) | custom | Third-party locator |
+| store-locator | 2 (+82,456) | custom | Excluded; link out |
+| help-article / help-page | 155 | content | Default content, article template |
+| Spanish mirror (`/es`) | 118 | per English template | Same blocks, localized content and placeholders |
 
 ## Commerce backend
 
 ACCS sandbox `config.json` committed. The sandbox catalog has 18 products: partial overlap with the source (Galaxy A16 5G, iPhone 16e, Pixel 10a, BYOD plans, Boost Protect). Source PDPs for products missing from the sandbox cannot render live data until the catalog is loaded.
 
+## Decisions
+
+Recorded in `site.json` `decisions`: locator excluded and linked; Spanish and help included; templated PDP/PLP with redirects; carrier flows link out; pages created directly in DA.live.
+
 ## Totals
 
-See `urls.csv`: 181 URL rows (178 pending, 3 excluded). Component inventory (`components.csv`) not started.
+See `urls.csv`: 454 URL rows (448 pending, 6 excluded; 336 en-US, 118 es-US). Component inventory (`components.csv`) not started.
 
 ## Next pending batch
 
-1. Confirm scope decisions (see `scratch/REQUIREMENTS.md`).
+1. Obtain DA.live write authorization (token kept outside the repository).
 2. Render-inspect one page per template and write `components.csv`.
 3. Implement the global header/footer and homepage first.
