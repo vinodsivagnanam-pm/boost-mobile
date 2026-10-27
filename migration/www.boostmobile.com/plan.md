@@ -65,6 +65,8 @@ Each batch: create the DA page via the admin API → preview → browser check (
 
 ## 6. Risks and limits
 
+- **Nav (T3):** the DA `/nav` source is versioned in `content/nav.html`. Brand links filter the handsets PLP with `?filter=cs_manufacturer:<Brand>` (sandbox facet); Motorola has no sandbox products. Activation, compatibility, coverage map, locator, and help link to the live site. The phone number sits in the tools section because the header requires a non-empty third nav section.
+
 - **Fonts:** the source uses licensed Neue Haas Grotesk Text Pro (body) and Druk (display). Tokens name them first, but no font files are committed; browsers fall back to Helvetica Neue/Arial and roboto-condensed until the brand owner supplies licensed web fonts (T2).
 
 - **Images:** source images are hot-linked during the draft phase and must be uploaded to DA for production (rights confirmed by the user).

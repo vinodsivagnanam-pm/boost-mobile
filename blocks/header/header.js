@@ -139,17 +139,15 @@ subMenuHeader.innerHTML = `<h5 class="back-link">${labels.Global?.AllCategories 
  */
 function setupSubmenu(navSection) {
   if (navSection.querySelector('ul')) {
-    let label;
-    if (navSection.childNodes.length) {
-      [label] = navSection.childNodes;
-    }
+    const label = [...navSection.childNodes]
+      .find((node) => node.nodeName !== 'UL' && node.textContent.trim());
 
     const submenu = navSection.querySelector('ul');
     const wrapper = document.createElement('div');
     const header = subMenuHeader.cloneNode(true);
     const title = document.createElement('h6');
     title.classList.add('submenu-title');
-    title.textContent = label.textContent;
+    title.textContent = label ? label.textContent.trim() : '';
 
     wrapper.classList.add('submenu-wrapper');
     wrapper.appendChild(header);
