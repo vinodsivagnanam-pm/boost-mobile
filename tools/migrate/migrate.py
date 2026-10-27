@@ -57,7 +57,7 @@ def migrate_row(r, dry):
     sections, summary, soup = conv.convert(html)
     if not sections:
         return 'failed', 'no convertible content found', summary
-    sections[-1] += L.metadata(soup)
+    sections[-1] += L.metadata(soup, L.locale_metadata(r.get('locale')))
     doc = L.page(sections)
     if dry:
         print(doc[:3000])

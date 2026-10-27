@@ -7,6 +7,8 @@ Configuration comes from the migration record, not from code:
   migration/<host>/urls.csv    source_url -> destination_path (link rewriting)
   migration/<host>/link-map.csv (optional) source_url,destination_path overrides
       (e.g. legacy product URLs -> /products/<urlKey>/<sku>)
+  site.json locales (optional) per urls.csv locale: source host, destination
+      prefix, language and nav/footer fragments (see MIGRATION.md, Locales)
 DA auth: a bearer token in $DA_TOKEN or ~/.da-token (never commit it).
 """
 import csv
@@ -28,6 +30,8 @@ REC = os.path.join(ROOT, 'migration', HOST)
 LIVE_ORIGIN = 'https://' + HOST
 SITE_JSON = json.load(open(os.path.join(REC, 'site.json')))
 ORG, SITE = SITE_JSON['destination']['repository'].split('/')
+LOCALES = SITE_JSON.get('locales', {})
+LOCALE_HOSTS = {v['host']: k for k, v in LOCALES.items() if v.get('host')}
 CACHE = os.environ.get('MIGRATION_CACHE', os.path.join('/tmp', 'migration-cache', HOST))
 E = html.escape
 
@@ -113,7 +117,20 @@ def map_link(href, base=LIVE_ORIGIN):
         d = r['destination_path']
         d = d if ('?' in d or ':' in d) else eds_path(d) or '/'
         return d + (('#' + p.fragment) if p.fragment else '')
+    if p.netloc in LOCALE_HOSTS and not p.query:
+        # No translated page: fall back to the default-locale page if it was migrated.
+        en = map_link(urllib.parse.urlunsplit(('https', HOST, p.path, '', p.fragment)))
+        if en and en.startswith('/'):
+            return en
     return u
+
+
+def locale_metadata(locale):
+    """Extra metadata rows for pages of a non-default locale (site.json locales)."""
+    c = LOCALES.get(locale or '')
+    if not c:
+        return {}
+    return {k.capitalize(): E(c[k]) for k in ('language', 'nav', 'footer') if c.get(k)}
 
 
 ALLOWED = {'p', 'ul', 'ol', 'li', 'strong', 'em', 'a', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'br',

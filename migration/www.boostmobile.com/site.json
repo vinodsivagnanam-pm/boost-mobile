@@ -68,6 +68,17 @@
       "topic": "content-destination",
       "decision": "Create pages directly in DA.live once the user authorizes write access",
       "date": "2026-10-27"
+    },
+    "T16: Spanish pages use per-page nav/footer/language metadata (site.json locales) instead of a multistore config.json root, because the sandbox has no Spanish store view; links to pages without a Spanish version fall back to the English page."
+  ],
+  "locales": {
+    "es-US": {
+      "host": "es.boostmobile.com",
+      "prefix": "/es",
+      "language": "es",
+      "nav": "/es/nav",
+      "footer": "/es/footer",
+      "note": "MotionPoint translation proxy of www; same Commerce store view (no Spanish store view), Commerce labels stay English"
     }
-  ]
+  }
 }
