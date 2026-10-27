@@ -87,9 +87,10 @@ function createSlide(row, slideIndex, carouselId) {
   slide.classList.add('carousel-slide');
 
   row.querySelectorAll(':scope > div').forEach((column, colIdx) => {
-    column.classList.add(
-      `carousel-slide-${colIdx === 0 ? 'image' : 'content'}`,
-    );
+    let role = colIdx === 0 ? 'image' : 'content';
+    // optional third column holding only an image: foreground media
+    if (colIdx > 1 && column.querySelector('picture') && !column.textContent.trim()) role = 'media';
+    column.classList.add(`carousel-slide-${role}`);
     slide.append(column);
   });
 
@@ -143,7 +144,8 @@ export default async function decorate(block) {
     block.append(slideIndicatorsNav);
   }
 
-  shuffleArray(rows);
+  // hero carousels keep authored order (first slide is the LCP)
+  if (!block.classList.contains('hero')) shuffleArray(rows);
 
   rows.forEach((row, idx) => {
     const slide = createSlide(row, idx, carouselId);

@@ -170,3 +170,85 @@ main > .section .carousel-wrapper {
         --slide-content-width: auto;
     }
 }
+
+/* hero variant: promo slides with background, copy and foreground media */
+.carousel.hero .carousel-slides {
+    height: auto;
+}
+
+.carousel.hero .carousel-slides .carousel-slide {
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    min-height: 0;
+    overflow: hidden;
+}
+
+.carousel.hero .carousel-slide .carousel-slide-content {
+    margin: 0;
+    padding: 32px 24px 8px;
+    color: var(--color-brand-500, #171725);
+    background: none;
+}
+
+.carousel.hero .carousel-slide-content h1,
+.carousel.hero .carousel-slide-content h2 {
+    margin: 0 0 8px;
+    padding: 0;
+    font-family: var(--type-display-font-family, inherit);
+    font-size: clamp(2.25rem, 7vw, 4rem);
+    font-style: italic;
+    line-height: 1;
+    text-align: left;
+    text-transform: uppercase;
+}
+
+.carousel.hero .carousel-slide-content h3 {
+    margin: 0 0 16px;
+}
+
+.carousel.hero .carousel-slide-content p {
+    padding: 0;
+    text-align: left;
+}
+
+.carousel.hero .carousel-slide-content p:has(sup) {
+    font-size: var(--body-font-size-xs, 0.875rem);
+}
+
+.carousel.hero .carousel-slide .carousel-slide-media {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    padding: 0 24px 48px;
+}
+
+.carousel.hero .carousel-slide .carousel-slide-media img {
+    width: auto;
+    max-width: 100%;
+    max-height: 320px;
+    object-fit: contain;
+}
+
+@media (min-width: 900px) {
+    .carousel.hero .carousel-slides .carousel-slide {
+        flex-direction: row;
+        align-items: center;
+        min-height: 480px;
+    }
+
+    .carousel.hero .carousel-slide .carousel-slide-content {
+        flex: 1 1 55%;
+        padding: 48px 32px 48px max(32px, calc((100vw - 1200px) / 2));
+    }
+
+    .carousel.hero .carousel-slide .carousel-slide-media {
+        flex: 1 1 45%;
+        padding: 32px;
+    }
+
+    .carousel.hero .carousel-slide .carousel-slide-media img {
+        max-height: 420px;
+    }
+}

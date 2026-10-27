@@ -29,3 +29,117 @@
   aspect-ratio: 4 / 3;
   object-fit: cover;
 }
+
+/* quick-links: icon + link tiles */
+.cards.quick-links > ul {
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--spacing-small, 8px);
+}
+
+.cards.quick-links > ul > li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  border: 0;
+  border-radius: 12px;
+  background-color: var(--color-brand-500, #171725);
+}
+
+.cards.quick-links > ul > li img {
+  width: 32px;
+  height: 32px;
+  aspect-ratio: auto;
+  object-fit: contain;
+}
+
+.cards.quick-links .cards-card-body {
+  margin: 0;
+}
+
+.cards.quick-links .cards-card-body p {
+  margin: 0;
+}
+
+.cards.quick-links .cards-card-body a {
+  color: var(--color-neutral-50, #fff);
+  font-weight: 700;
+}
+
+/* features: centered icon, title and copy without borders */
+.cards.features > ul > li {
+  border: 0;
+  text-align: center;
+}
+
+.cards.features .cards-card-image img {
+  width: 72px;
+  height: auto;
+  aspect-ratio: auto;
+}
+
+/* testimonials: scrollable quote cards */
+.cards.testimonials > ul {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 16px;
+}
+
+.cards.testimonials > ul > li {
+  flex: 0 0 280px;
+  padding: 24px;
+  border-radius: 16px;
+  scroll-snap-align: start;
+}
+
+.cards.testimonials .cards-card-image img {
+  width: 100px;
+  height: auto;
+  aspect-ratio: auto;
+}
+
+.cards.testimonials .cards-card-body {
+  margin: 0;
+}
+
+/* offers: deal cards with product image */
+.cards.offers > ul > li {
+  display: flex;
+  flex-direction: column;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.cards.offers .cards-card-image img {
+  aspect-ratio: 1;
+  object-fit: contain;
+}
+
+.cards.offers .cards-card-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  margin: 0;
+  padding: 16px 24px 24px;
+}
+
+.cards.offers .cards-card-body em {
+  color: var(--color-accent-500, #fc5400);
+  font-style: normal;
+  font-weight: 700;
+}
+
+.cards.offers .cards-card-body p:last-child {
+  margin-top: auto;
+}
+
+@media (min-width: 900px) {
+  .cards.quick-links > ul {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.cards.offers .cards-card-body > * {
+  margin: 0 0 8px;
+}

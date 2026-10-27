@@ -31,3 +31,10 @@
     order: unset;
   }
 }
+
+/* promo: rounded tinted panel */
+.columns.promo > div {
+  padding: 24px;
+  border-radius: 16px;
+  background-color: var(--color-neutral-200, #f2f2f2);
+}
