@@ -65,6 +65,8 @@ Each batch: create the DA page via the admin API → preview → browser check (
 
 ## 6. Risks and limits
 
+- **Fonts:** the source uses licensed Neue Haas Grotesk Text Pro (body) and Druk (display). Tokens name them first, but no font files are committed; browsers fall back to Helvetica Neue/Arial and roboto-condensed until the brand owner supplies licensed web fonts (T2).
+
 - **Images:** source images are hot-linked during the draft phase and must be uploaded to DA for production (rights confirmed by the user).
 - **Legal copy and offers** change often; the migrated text reflects the access date.
 - **Catalog gaps:** most source devices are not in the sandbox.
