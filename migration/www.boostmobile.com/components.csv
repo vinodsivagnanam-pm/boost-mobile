@@ -1,5 +1,5 @@
 source_url,component_id,region,classification,evidence,block,dropin_package,implementation_path,status,blocker
-https://www.boostmobile.com/,global-header,header,hybrid,cmp-mega mega menu + utility links; mini-cart and sign-in,header,"@dropins/storefront-cart, @dropins/storefront-auth",blocks/header; DA /nav,pending,
+https://www.boostmobile.com/,global-header,header,hybrid,cmp-mega mega menu + utility links; mini-cart and sign-in,header,"@dropins/storefront-cart, @dropins/storefront-auth",blocks/header; DA /nav,verified,
 https://www.boostmobile.com/,global-footer,footer,content,"footer experience fragment with link columns, social, legal",footer,,blocks/footer; DA /footer,pending,
 https://www.boostmobile.com/,global-legal-modal,overlay,content,cmp-modal / cmp-md-overlay legal and offer details on every page,modal,,blocks/modal; DA /fragments/*,pending,
 https://www.boostmobile.com/,global-plan-check-form,overlay,custom,form#leadgenform-v2 POST /shop/buy/plans/check (carrier eligibility) on home and plans,link-out,,,pending,Carrier service; link out per decision

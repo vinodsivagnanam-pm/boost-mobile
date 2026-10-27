@@ -903,3 +903,71 @@ body:has(.seller-assisted-buying-banner) {
     display: inline-block;
   }
 }
+
+/* Boost: keep the desktop nav inside the viewport between 900px and 1279px */
+@media (min-width: 900px) and (max-width: 1279px) {
+  header nav {
+    gap: 0 16px;
+    padding: 0 16px;
+  }
+
+  header nav .nav-sections {
+    min-width: 0;
+    white-space: normal;
+  }
+
+  header nav .nav-sections .default-content-wrapper>ul>li,
+  header nav .nav-sections .nav-drop {
+    padding: 0 6px;
+    line-height: 1.2;
+    text-align: center;
+  }
+
+  header nav .nav-tools {
+    gap: 4px;
+  }
+
+  header nav .nav-tools .default-content-wrapper {
+    display: none;
+  }
+}
+
+/* Boost: fit brand, sales phone and core tools on small screens (wishlist stays in account) */
+@media (max-width: 599px) {
+  header nav {
+    gap: 0 8px;
+    padding: 0 12px;
+  }
+
+  header nav .nav-brand {
+    min-width: 72px;
+  }
+
+  header nav .nav-brand img {
+    width: 72px;
+  }
+
+  header nav .nav-tools {
+    gap: 0;
+  }
+
+  header nav .nav-tools .default-content-wrapper {
+    font-size: 12px;
+    white-space: nowrap;
+  }
+
+  header nav .nav-tools .wishlist-wrapper {
+    display: none;
+  }
+
+  header nav .nav-tools-wrapper>button {
+    width: 36px;
+    padding: 8px;
+  }
+}
+
+@media (min-width: 600px) and (max-width: 899px) {
+  header nav .nav-tools .default-content-wrapper {
+    white-space: nowrap;
+  }
+}
