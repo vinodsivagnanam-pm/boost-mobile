@@ -77,7 +77,7 @@ By page classification: content 343, hybrid 46, commerce 43, custom 23.
 | `/es` | 99 | 94 | 96 | 69 | 1.7 s | 0 | 0 ms |
 
 - SEO: `is-crawlable` fails on every page because `aem.page` preview sends `noindex`; this does not apply to the live domain. The PDP template has no meta description (the drop-in does not set one); add a product-level description at go-live.
-- Fixed in T17: brand orange `#fc5400` is 3.3:1 on white, so small orange text (plan-card names, offer-card emphasis) now uses `--color-accent-text: #c94300` (4.9:1); fills and large text keep `#fc5400`. A missing `/default-meta-image.png` (404 on pages without an image, such as the PDP) was added from the source share image.
+- Fixed in T17 (home accessibility 94 → 98 after the fix): brand orange `#fc5400` is 3.3:1 on white, so small orange text (plan-card names, offer-card emphasis) now uses `--color-accent-text: #c94300` (4.9:1); fills and large text keep `#fc5400`. A missing `/default-meta-image.png` (404 on pages without an image, such as the PDP) was added from the source share image.
 - Remaining: `heading-order` on the home hero carousel (h1 then h3, as authored on the source); PDP gallery dots are below the 24px target size (drop-in markup); PLP catalog images trigger `image-aspect-ratio`/`image-size-responsive` (catalog assets). Commerce LCP is 3.4–3.5 s on the sandbox; re-measure against the production catalog.
 
 ## Remaining blockers and go-live work
