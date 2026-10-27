@@ -17,3 +17,6 @@ scripts/__dropins__/**/*.map
 !AGENTS.md
 
 .scout/
+
+# local agent working files
+scratch/
