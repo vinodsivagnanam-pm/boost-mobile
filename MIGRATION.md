@@ -154,6 +154,18 @@ The URL is the only initial site-specific input, not a replacement for destinati
 
 Ask for the missing destination configuration when it actually blocks work, while continuing independent local work where safe. Never reuse this project's owner's tokens or infer production endpoints from a public site. `default-site.json` contains placeholders, not a configured destination; demo configuration is not production.
 
+### Connect DA.live content to your repository (Site Creator)
+
+Cloning or forking this repository does **not** create a DA.live project or connect content. Each user connects their own repository once, in the browser, using their own GitHub account and Adobe ID. Agents cannot perform these steps on the user's behalf.
+
+1. **Install AEM Code Sync** on your destination repository: open [AEM Code Sync](https://github.com/apps/aem-code-sync), select **Configure**, choose the repository owner, select **Only select repositories**, choose the repository, and install. Pushes to `main` then deploy code to `https://main--<repo>--<owner>.aem.page`.
+2. **Add Commerce configuration** (only when you have an authorized backend): generate `config.json` with the [config generator](https://da.live/app/adobe-commerce/storefront-tools/tools/config-generator/config-generator) for your backend type (ACCS, ACO, or PaaS), save it at the repository root, and commit it. Without it, content blocks render but drop-ins have no Commerce data.
+3. **Create content with Site Creator**: open [Site Creator](https://da.live/app/adobe-commerce/storefront-tools/tools/site-creator/site-creator), select **Use existing repository**, enter the GitHub owner and repository name, select **Create site**, and follow the prompts until the starter content is copied to `https://da.live/#/<owner>/<repo>`.
+4. **Verify the connection**: open `https://main--<repo>--<owner>.aem.page/`. If it returns 404, preview and publish the starter pages from DA.live or Sidekick, then retry.
+5. **Record the result** in `migration/<source-host>/site.json` (non-sensitive values only: owner, repository, DA path, preview URL, and whether Commerce config is present).
+
+After this, migrated pages are authored in the DA.live content folder, and code changes are delivered from the GitHub repository. Local drafts in `drafts/agent/` remain local until an author recreates or imports them in DA.live and previews or publishes them. If your organization does not allow Site Creator, follow the manual steps in [Create a storefront](https://experienceleague.adobe.com/en/tools/commerce-storefront/get-started/create-storefront/).
+
 ## 7. Troubleshooting and maintenance
 
 | Symptom | Action |
@@ -181,4 +193,6 @@ The setup run on 2026-10-27 reported 38 npm advisories in the existing dependenc
 - [Experience Catalyst MCP user guide](https://github.com/Adobe-AEM-Foundation/aem-experience-catalyst/blob/main/docs/reference/mcp-user-guide.md)
 - [EDS documentation](https://www.aem.live/docs/)
 - [Commerce site creator](https://da.live/app/adobe-commerce/storefront-tools/tools/site-creator/site-creator)
+- [Create a storefront](https://experienceleague.adobe.com/en/tools/commerce-storefront/get-started/create-storefront/)
+- [AEM Code Sync app](https://github.com/apps/aem-code-sync)
 - [Copilot app repository configuration](https://docs.github.com/copilot/reference/github-copilot-app-reference/repository-configuration)
