@@ -18,3 +18,4 @@ sync-block-collection.sh
 migration/
 drafts/agent/
 scratch/
+tools/migrate/

@@ -1,0 +1,17 @@
+{
+  "plan_details": {
+    "unlimited": "/modals/plans/unlimited-details",
+    "unlimited+": "/modals/plans/unlimited-plus-details",
+    "unlimited premium": "/modals/plans/unlimited-premium-details",
+    "global connection": "/modals/plans/global-connection-details"
+  },
+  "drop_text": [
+    "Anchor",
+    "Disclaimers Anchor"
+  ],
+  "shelf_variant": "offers",
+  "drop_labels": [
+    "^Tooltip Modal$",
+    "^(Text Only|Image Only|Image Left, Text Right|Text Left, Image Right) Layouts?$"
+  ]
+}

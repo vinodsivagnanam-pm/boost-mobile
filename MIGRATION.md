@@ -119,6 +119,22 @@ The explicit mount serves `drafts/agent/index.html` at `/` and nested HTML at ma
 
 The `migration/` records and `drafts/agent/` files are excluded from EDS delivery in `.hlxignore`. Commit only non-sensitive work intended for sharing; screenshots and captured content must be authorized for the repository's visibility. Do not store raw private responses.
 
+#### Bulk conversion with `tools/migrate/`
+
+`tools/migrate/` is a committed, site-independent converter (excluded from delivery by `.hlxignore`). It reads `migration/<host>/urls.csv`, converts each source page into DA-compatible EDS HTML, writes a copy to `migration/<host>/content/`, uploads it to DA.live, triggers preview, and updates `urls.csv` and `components.csv`. It requires Python 3 with `beautifulsoup4` and a DA token in `$DA_TOKEN` or `~/.da-token` (see "Authorize DA.live writes"). The destination is read from `migration/<host>/site.json` (`destination.repository` = `<org>/<site>`).
+
+```sh
+export MIGRATION_HOST=<source-host>
+python3 tools/migrate/migrate.py --url https://<source-host>/<path> --dry-run   # print HTML only
+python3 tools/migrate/migrate.py --url https://<source-host>/<path> [...]       # pilot pages
+python3 tools/migrate/migrate.py --template <template> [--status pending] [--limit 20]
+```
+
+- `aem_core.py` maps AEM Core Components (accordion, card shelves, container links, partial-width grids) to `accordion`, `plan-cards`, `cards`, and `columns`; everything else becomes default content. Other source platforms need a sibling converter module that returns the same `(sections, summary, soup)` shape.
+- Site hints go in `migration/<host>/converter.json`: `plan_details` (plan name → modal page), `drop_text` (exact paragraphs to drop), `drop_labels` (regexes for authoring-only labels), and `shelf_variant` (cards variant for product shelves). `migration/<host>/link-map.csv` (`source,destination`) rewrites source links, such as product URLs to `/products/<urlKey>/<sku>`.
+- Modal content lives at `/modals/<group>/<name>` and is linked from page content; link rewriting keeps `/modals/` and `/products/` paths local.
+- Pilot one URL per template, verify it in the browser, fix the converter or hints, then run by template. Failures are written to `urls.csv` with a reason, and the batch continues.
+
 ### Validate and hand off
 
 Use `tester`, the existing lint commands, and real browser checks. Inspect each migrated route and its metadata/links; validate interactions, desktop/mobile layouts, and keyboard accessibility for each template and all exceptions. Check backend-dependent behavior separately with authorized test accounts/services. Do not place real orders or submit production forms as part of a crawl.
