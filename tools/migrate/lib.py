@@ -89,6 +89,12 @@ def img(src, alt='', width=None):
     return '<img src="' + E(img_url(src, width)) + '" alt="' + E(alt or '') + '">'
 
 
+def eds_path(path):
+    """EDS-safe destination path: lowercase segments of [a-z0-9-] (underscores and other characters become hyphens)."""
+    segs = [re.sub(r'-+', '-', re.sub(r'[^a-z0-9]+', '-', s.lower())).strip('-') for s in path.split('/')]
+    return '/' + '/'.join(s for s in segs if s)
+
+
 def map_link(href, base=LIVE_ORIGIN):
     """Destination for a source link: local path if migrated, else the absolute live URL."""
     if href and href.startswith(('/modals/', '/products/')):
@@ -104,7 +110,9 @@ def map_link(href, base=LIVE_ORIGIN):
     if (r and r['status'] != 'excluded' and r['destination_path']
             and r['page_classification'] != 'custom' and '<' not in r['destination_path']
             and not p.query):
-        return r['destination_path'] + (('#' + p.fragment) if p.fragment else '')
+        d = r['destination_path']
+        d = d if ('?' in d or ':' in d) else eds_path(d) or '/'
+        return d + (('#' + p.fragment) if p.fragment else '')
     return u
 
 

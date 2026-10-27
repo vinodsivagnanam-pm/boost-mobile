@@ -155,6 +155,9 @@ class Section:
             rows = self._card_rows(shelf.select(':scope > .card-container') or shelf.find_all(recursive=False))
             if rows:
                 v = CFG.get('shelf_variant', '')
+                texts = [re.sub(r'<[^>]+>', '', r[-1]).strip() for r in rows]
+                if texts and all(t[:1] in '"“' for t in texts):
+                    v = 'testimonials'
                 self._mark(shelf, L.block(('cards ' + v).strip(), rows), 'cards (%s)' % v if v else 'cards')
 
     def link_tiles(self):

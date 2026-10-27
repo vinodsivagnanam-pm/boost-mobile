@@ -127,12 +127,14 @@ The `migration/` records and `drafts/agent/` files are excluded from EDS deliver
 export MIGRATION_HOST=<source-host>
 python3 tools/migrate/migrate.py --url https://<source-host>/<path> --dry-run   # print HTML only
 python3 tools/migrate/migrate.py --url https://<source-host>/<path> [...]       # pilot pages
-python3 tools/migrate/migrate.py --template <template> [--status pending] [--limit 20]
+python3 tools/migrate/migrate.py --template <template> [--locale en-US] [--status pending] [--limit 20]
 ```
 
 - `aem_core.py` maps AEM Core Components (accordion, card shelves, container links, partial-width grids) to `accordion`, `plan-cards`, `cards`, and `columns`; everything else becomes default content. Other source platforms need a sibling converter module that returns the same `(sections, summary, soup)` shape.
 - Site hints go in `migration/<host>/converter.json`: `plan_details` (plan name → modal page), `drop_text` (exact paragraphs to drop), `drop_labels` (regexes for authoring-only labels), and `shelf_variant` (cards variant for product shelves). `migration/<host>/link-map.csv` (`source,destination`) rewrites source links, such as product URLs to `/products/<urlKey>/<sku>`.
 - Modal content lives at `/modals/<group>/<name>` and is linked from page content; link rewriting keeps `/modals/` and `/products/` paths local.
+- Destination paths are normalized to EDS-safe segments (lowercase `[a-z0-9-]`); underscores or uppercase cause preview 404s. The normalized path is written back to `urls.csv` and noted in `reason`, so add a redirect from the source path later.
+- Card shelves whose cards all start with a quotation mark become `cards (testimonials)`. The `columns` and `cards` decorators keep source images whose `width` attribute is 200px or less (icons, badges) at that width instead of stretching them across the column.
 - Pilot one URL per template, verify it in the browser, fix the converter or hints, then run by template. Failures are written to `urls.csv` with a reason, and the batch continues.
 
 ### Validate and hand off

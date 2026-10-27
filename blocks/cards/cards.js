@@ -12,6 +12,16 @@ export default function decorate(block) {
     });
     ul.append(li);
   });
-  ul.querySelectorAll('picture > img').forEach((img) => img.closest('picture').replaceWith(createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }])));
+  ul.querySelectorAll('picture > img').forEach((img) => {
+    const w = parseInt(img.getAttribute('width'), 10);
+    const pic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+    // small source images (icons, badges) keep their authored size
+    if (w > 0 && w <= 200) {
+      const optimized = pic.querySelector('img');
+      optimized.classList.add('icon');
+      optimized.style.width = `${w}px`;
+    }
+    img.closest('picture').replaceWith(pic);
+  });
   block.replaceChildren(ul);
 }

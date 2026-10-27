@@ -30,6 +30,14 @@
   object-fit: cover;
 }
 
+/* SVG icons keep their intrinsic size instead of filling the card */
+.cards > ul > li .cards-card-body img[src*='format=svg'] {
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  aspect-ratio: auto;
+}
+
 /* quick-links: icon + link tiles */
 .cards.quick-links > ul {
   grid-template-columns: repeat(2, 1fr);
@@ -103,6 +111,11 @@
   margin: 0;
 }
 
+.cards.testimonials .cards-card-body img {
+  width: 100px;
+  height: auto;
+}
+
 /* offers: deal cards with product image */
 .cards.offers > ul > li {
   display: flex;
@@ -142,4 +155,12 @@
 
 .cards.offers .cards-card-body > * {
   margin: 0 0 8px;
+}
+
+/* small source images (icons, badges) keep their authored size */
+.cards li .cards-card-image img.icon,
+.cards li .cards-card-body img.icon {
+  max-width: 100%;
+  height: auto;
+  aspect-ratio: auto;
 }

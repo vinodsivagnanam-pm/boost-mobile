@@ -7,6 +7,18 @@
   width: 100%;
 }
 
+/* SVG icons keep their intrinsic size instead of filling the column */
+.columns > div > div img[src*='format=svg'] {
+  width: auto;
+  max-width: 100%;
+  height: auto;
+}
+
+.columns img.icon {
+  max-width: 100%;
+  height: auto;
+}
+
 .columns > div > div {
   order: 1;
 }

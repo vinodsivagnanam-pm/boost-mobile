@@ -44,6 +44,10 @@ def migrate_row(r, dry):
     dest = r['destination_path']
     if not dest or '<' in dest:
         return 'blocked', 'no concrete destination_path', []
+    note = ''
+    if L.eds_path(dest) != dest.rstrip('/') and dest != '/':
+        note = 'destination normalized from ' + dest
+        dest = r['destination_path'] = L.eds_path(dest)
     sections, summary, soup = aem_core.convert(L.fetch(src))
     if not sections:
         return 'failed', 'no convertible content found', summary
@@ -57,7 +61,7 @@ def migrate_row(r, dry):
     put, prev = L.upload(dest if dest != '/' else '/index', doc)
     if put not in ('200', '201') or prev != '200':
         return 'failed', 'DA put ' + put + ' preview ' + prev, summary
-    return 'implemented', '', summary
+    return 'implemented', note, summary
 
 
 def main():
@@ -66,6 +70,7 @@ def main():
     ap.add_argument('--url', nargs='*')
     ap.add_argument('--limit', type=int, default=0)
     ap.add_argument('--status', default='pending')
+    ap.add_argument('--locale', help='only rows with this urls.csv locale, e.g. en-US')
     ap.add_argument('--dry-run', action='store_true')
     a = ap.parse_args()
 
@@ -76,6 +81,8 @@ def main():
         todo = [r for r in urows if r['source_url'].rstrip('/') in want]
     else:
         todo = [r for r in urows if r['template'] == a.template and r['status'] == a.status]
+        if a.locale:
+            todo = [r for r in todo if r.get('locale') == a.locale]
     todo = [r for r in todo if r['page_classification'] in ('content', 'hybrid') or a.url]
     if a.limit:
         todo = todo[:a.limit]
