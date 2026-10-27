@@ -17,3 +17,4 @@ _*.json
 sync-block-collection.sh
 migration/
 drafts/agent/
+scratch/

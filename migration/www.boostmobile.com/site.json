@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "source_url": "https://www.boostmobile.com/",
+  "source_host": "www.boostmobile.com",
+  "started_at": "2026-10-27T18:42:30Z",
+  "updated_at": "2026-10-27T18:46:00Z",
+  "starter_commit": "ea3f33a",
+  "tool_versions": {
+    "node": "v24.15.0",
+    "@adobe-commerce/commerce-extensibility-tools": "3.6.0",
+    "@dropins/ai-tools": "1.0.0 (pinned, MCP not connected in this host)"
+  },
+  "source_platform_observations": [
+    "AEM Sites (harmony-* templates, cmp-* core components) for marketing pages",
+    "Adobe Commerce/Magento 2 (theme Dop/Boostmobile, MageWorx sitemap) under /shop",
+    "Separate store-locator platform under /locations",
+    "Spanish on es.boostmobile.com (separate host)"
+  ],
+  "sitemap_urls": [
+    "https://www.boostmobile.com/en.sitemap.xml",
+    "https://www.boostmobile.com/shop/media/sitemap/boostmobile/sitemap.xml",
+    "https://www.boostmobile.com/locations/sitemap.xml",
+    "https://help.boostmobile.com/sitemap.xml (other origin, not in scope)",
+    "https://www.globalsiteseo.com/boostmobile.GSM/boostmobile.gsm.index.en_super.xml (third party, not fetched)",
+    "https://www.globalsiteseo.com/boostmobile.GSM/boostmobile.gsm.index.es_super.xml (third party, not fetched)"
+  ],
+  "discovery_status": "in_progress",
+  "discovery_limitations": [
+    "Navigation crawl covers homepage only so far; deeper link crawl pending",
+    "82456 /locations URLs recorded as one template group (full list in locations-urls.txt.gz)",
+    "Authenticated pages (account, checkout) not accessible",
+    "help.boostmobile.com and es.boostmobile.com are other origins and not crawled"
+  ],
+  "destination": {
+    "repository": "vinodsivagnanam-pm/boost-mobile",
+    "da_path": "https://da.live/#/vinodsivagnanam-pm/boost-mobile",
+    "preview_url": "https://main--boost-mobile--vinodsivagnanam-pm.aem.page/",
+    "commerce_backend": "ACCS sandbox (config.json present)",
+    "catalog_note": "Sandbox has 18 products; only partial overlap with source device catalog"
+  }
+}
