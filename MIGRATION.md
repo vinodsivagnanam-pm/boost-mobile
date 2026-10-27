@@ -159,13 +159,43 @@ Ask for the missing destination configuration when it actually blocks work, whil
 Cloning or forking this repository does **not** create a DA.live project or connect content. Each user connects their own repository once, in the browser, using their own GitHub account and Adobe ID. Agents cannot perform these steps on the user's behalf.
 
 1. **Install AEM Code Sync** on your destination repository: open [AEM Code Sync](https://github.com/apps/aem-code-sync), select **Configure**, choose the repository owner, select **Only select repositories**, choose the repository, and install. Pushes to `main` then deploy code to `https://main--<repo>--<owner>.aem.page`.
-2. **Add Commerce configuration** (only when you have an authorized backend): generate `config.json` with the [config generator](https://da.live/app/adobe-commerce/storefront-tools/tools/config-generator/config-generator) for your backend type (ACCS, ACO, or PaaS), save it at the repository root, and commit it. Without it, content blocks render but drop-ins have no Commerce data.
+2. **Add Commerce configuration** (only when you have an authorized backend): supply the backend values listed in [Commerce configuration inputs](#commerce-configuration-inputs-configjson), save `config.json` at the repository root, and commit it. Without it, content blocks render but drop-ins have no Commerce data.
 3. **Create content with Site Creator**: open [Site Creator](https://da.live/app/adobe-commerce/storefront-tools/tools/site-creator/site-creator), select **Use existing repository**, enter the GitHub owner and repository name, select **Create site**, and follow the prompts until the starter content is copied to `https://da.live/#/<owner>/<repo>`.
    - If the DA.live project exists but is **empty** (for example, it was created without copying content), run Site Creator again with **Use existing repository** and the same owner/repository so it copies the boilerplate starter content. Keep this content: the Commerce pages (`cart`, `checkout`, `customer/*`, `products/*`, `search`, `order-*`) already contain the drop-in Commerce blocks, and `nav` and `footer` are required for the header and footer. Starter homepage and marketing pages are placeholders that the migration replaces with source-derived pages.
 4. **Verify the connection**: open `https://main--<repo>--<owner>.aem.page/` and check that `/`, `/nav`, `/footer`, `/cart`, `/checkout`, `/customer/account`, and `/search` return 200. A 200 for `/scripts/scripts.js` with a 404 for `/` means Code Sync works but content is missing or unpreviewed. In that case, preview and publish the starter pages from DA.live or Sidekick, then retry. Product data still requires a valid `config.json` (step 2).
 5. **Record the result** in `migration/<source-host>/site.json` (non-sensitive values only: owner, repository, DA path, preview URL, and whether Commerce config is present).
 
 After this, migrated pages are authored in the DA.live content folder, and code changes are delivered from the GitHub repository. Local drafts in `drafts/agent/` remain local until an author recreates or imports them in DA.live and previews or publishes them. If your organization does not allow Site Creator, follow the manual steps in [Create a storefront](https://experienceleague.adobe.com/en/tools/commerce-storefront/get-started/create-storefront/).
+
+### Commerce configuration inputs (`config.json`)
+
+The source URL cannot reveal the destination Commerce backend. **The user must supply these values**, typically as screenshots or text from the Commerce Cloud Manager instance page and **Admin > Stores > All Stores**. Agents must ask for them and must not reuse another project's values or the boilerplate demo configuration.
+
+| Input | Where the user finds it | `config.json` field(s) |
+| --- | --- | --- |
+| Backend type (ACCS, ACO, or PaaS) | Commerce Cloud Manager instance page | Determines the template and headers |
+| GraphQL endpoint | Instance page, **GraphQL endpoint** | `commerce-endpoint` (ACCS: one endpoint for catalog and core). PaaS also needs `commerce-core-endpoint`. |
+| Instance or environment ID | Instance page, **Instance ID** | `analytics.environment-id` (PaaS also needs `Magento-Environment-Id` and `x-api-key` in `headers.cs`) |
+| Environment type | Instance page, **Environment** | `analytics.environment` (`Testing` for sandbox, `Production` for production) |
+| Website code and name | **Stores > All Stores**, Web Site column | `headers.cs.Magento-Website-Code`, `analytics.website-code`, `analytics.website-name` |
+| Store code and name | **Stores > All Stores**, Store column | `headers.cs.Magento-Store-Code`, `analytics.store-code`, `analytics.store-name` |
+| Store view code and name | **Stores > All Stores**, Store View column | `headers.all.Store`, `headers.cs.Magento-Store-View-Code`, `analytics.store-view-code`, `analytics.store-view-name` |
+| Additional store views or locales (if any) | **Stores > All Stores** | Path-based overrides such as `"/fr/"` |
+| ACO only: catalog view ID and price book ID | Commerce Optimizer | `headers.cs.AC-View-ID`, `headers.cs.AC-Price-Book-ID` |
+
+The agent can derive or verify the rest from the endpoint, without credentials:
+
+```sh
+curl -sS "<graphql-endpoint>" -H 'Content-Type: application/json' -H 'Store: <store-view-code>' \
+  -d '{"query":"{ storeConfig { store_code store_group_code website_code base_currency_code root_category_uid locale } }"}'
+```
+
+- `base_currency_code` maps to `analytics.base-currency-code`.
+- `root_category_uid` is the base64 encoding of the numeric category ID. Decode it for `plugins.picker.rootCategory` (for example, `MTQ=` decodes to `14`).
+- Numeric `store-id`, `store-view-id`, and `website-id` are `1` on a single-website instance; confirm them in Admin for multi-site backends.
+- Verify that the catalog responds with the `cs` headers by running `productSearch(phrase:"", page_size:1) { total_count }`.
+
+Use the [config generator](https://da.live/app/adobe-commerce/storefront-tools/tools/config-generator/config-generator) and the [storefront configuration reference](https://experienceleague.adobe.com/en/tools/commerce-storefront/setup/configuration/commerce-configuration/) for the exact structure. A repository `config.json` overrides the Config Service `public` configuration. For production, Adobe recommends storing the configuration in the Config Service instead of committing it. Config changes can take up to 2 hours to clear the CDN cache; also clear the `config` entry in the browser's session storage. Never put secrets in `config.json`; it is publicly served.
 
 ## 7. Troubleshooting and maintenance
 
