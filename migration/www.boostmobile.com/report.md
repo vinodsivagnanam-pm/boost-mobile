@@ -1,6 +1,6 @@
 # Migration report: www.boostmobile.com
 
-Source accessed: 2026-10-27. Starter commit: `ea3f33a`. Status: **migrated to DA.live preview (T1–T17 complete); not published**. Preview: https://main--boost-mobile--vinodsivagnanam-pm.aem.page/
+Source accessed: 2026-10-27. Starter commit: `ea3f33a`. Status: **migrated and published to aem.live (T1–T18 complete); not live on the production domain**. Preview: https://main--boost-mobile--vinodsivagnanam-pm.aem.page/ · Live: https://main--boost-mobile--vinodsivagnanam-pm.aem.live/
 
 ## Scope and discovery
 
@@ -58,8 +58,7 @@ Recorded in `site.json` `decisions`: locator excluded and linked; Spanish and he
 
 | Status | Rows | Notes |
 | --- | --- | --- |
-| verified | 27 | Browser-checked on preview (home, template pilots, PLPs, PDPs, cart, `/help` samples, `/es`, `/es/plans`, an ES blog article) |
-| implemented | 367 | Uploaded and previewed; route sweeps returned HTTP 200 with one h1 (except 6 pages without a source h1) |
+| published | 394 | Previewed and published to aem.live (T18); live sweep returned 200 on all. 27 were browser-checked on preview (home, template pilots, PLPs, PDPs, cart, `/help` samples, `/es`, `/es/plans`, an ES blog article), and the live PDP was browser-checked |
 | excluded | 33 | Carrier flows and SSO link-outs, redirect-only and query-variant URLs, robots-disallowed, empty source |
 | blocked | 28 | 26 Commerce rows lack catalog data (23 PDPs, Motorola/tablet/watch PLPs); `yourprivacychoices` (EN and ES) is a client-side privacy form |
 
@@ -87,4 +86,4 @@ By page classification: content 343, hybrid 46, commerce 43, custom 23.
 - **Third-party and carrier features:** Affirm financing, trade-in, line choice, Boost Protect bundles, the plan-check lead form, newsletter signup, and the privacy-choices form. These stay link-outs or need separate integration work.
 - **Content gaps:** licensed brand fonts (fallback stack in use), Plan Details modals on deals cards, the ReadMe search widget, the troubleshooting iframe, and `/modals/plans/*` in Spanish.
 - **Localization:** Spanish pages use English Commerce labels and English Commerce pages (no Spanish store view). A multistore `/es/` root is the upgrade path when one exists.
-- **Publishing:** nothing is published to `aem.live`; publishing requires an authorized decision and the production Commerce configuration.
+- **Publishing:** all 449 DA documents and sheets outside `/drafts/` were previewed and published to `aem.live` on owner authorization (`tools/migrate/publish.py`; results in `publish-log.json`). Boilerplate pages (`/enrichment/*`, `/store-switcher`, `/wishlist`, account and order pages) were also published; delete or unpublish any that should not be public. The production domain, CDN redirects, and the production Commerce configuration are still required for go-live. Rerun `publish.py` after content changes.

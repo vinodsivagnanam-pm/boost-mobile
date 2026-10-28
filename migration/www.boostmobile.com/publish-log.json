@@ -1,0 +1,21 @@
+{
+  "site": "vinodsivagnanam-pm/boost-mobile",
+  "started": "2026-10-28T00:00:12Z",
+  "paths": 449,
+  "preview": [
+    {
+      "status": 202,
+      "job": "job-2026-10-28-00-00-12-7a026889",
+      "total": 449,
+      "failures": {}
+    }
+  ],
+  "live": [
+    {
+      "status": 202,
+      "job": "job-2026-10-28-00-01-11-1135e934",
+      "total": 449,
+      "failures": {}
+    }
+  ]
+}
